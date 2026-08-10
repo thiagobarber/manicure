@@ -1,476 +1,196 @@
-<!doctype html>
-<html lang="pt-BR" class="h-full">
- <head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curso de Manicure Profissional</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="/_sdk/element_sdk.js"></script>
+  <title>Curso Nail Designer | Teste de Aptidão</title>
+  <meta name="description" content="Responda ao quiz rápido e confira sua elegibilidade para a formação completa em Nail Design com certificado.">
   <style>
-    body {
-      box-sizing: border-box;
+    :root {
+      --primary: #FF0080;
+      --primary-hover: #D6006B;
+      --secondary: #FFFFFF;
+      --bg: #FAFAFA;
+      --text: #2D2D2D;
+      --light-text: #666666;
+      --border: #EAEAEA;
+      --shadow: 0 10px 30px rgba(255, 0, 128, 0.08);
+      --radius: 14px;
     }
-    
-    @keyframes slide {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.6); }
-      50% { box-shadow: 0 0 40px rgba(236, 72, 153, 0.9); }
-    }
-    
-    @keyframes urgent-pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-    
-    @keyframes price-bounce {
-      0%, 100% { transform: scale(1); }
-      25% { transform: scale(1.1); }
-      50% { transform: scale(1.05); }
-      75% { transform: scale(1.15); }
-    }
-    
-    .animated-price {
-      animation: price-bounce 2s ease-in-out infinite;
-    }
-    
-    .carousel-container {
-      overflow: hidden;
-      width: 100%;
-    }
-    
-    .carousel-track {
-      display: flex;
-      animation: slide 30s linear infinite;
-      width: max-content;
-    }
-    
-    .carousel-track:hover {
-      animation-play-state: paused;
-    }
-    
-    .chat-floating {
-      animation: pulse-glow 2s infinite;
-    }
-    
-    .urgent-timer {
-      animation: urgent-pulse 1s infinite;
-    }
-    
-    .glass-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    .message-user {
-      background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);
-      color: white;
-      margin-left: auto;
-    }
-    
-    .message-ai {
-      background: rgba(236, 72, 153, 0.15);
-      color: #1F2937;
-      margin-right: auto;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; align-items: center; padding-bottom: 40px; }
+    header { width: 100%; background: #fff; border-bottom: 1px solid var(--border); padding: 15px 20px; display: flex; justify-content: center; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+    header img { max-height: 45px; object-fit: contain; }
+    .container { width: 100%; max-width: 600px; padding: 20px; margin-top: 10px; }
+    .card { background: var(--secondary); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow); border: 1px solid var(--border); text-align: center; }
+    .progress-bar-container { width: 100%; background: #F0F0F0; height: 10px; border-radius: 20px; overflow: hidden; margin-bottom: 24px; }
+    .progress-bar { width: 25%; height: 100%; background: linear-gradient(90deg, #FF0080, #FF5EAA); transition: width 0.4s ease; border-radius: 20px; }
+    .step-counter { font-size: 0.85rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    h1, h2 { font-size: 1.4rem; color: #111; margin-bottom: 16px; font-weight: 700; line-height: 1.35; }
+    p.subtitle { font-size: 0.95rem; color: var(--light-text); margin-bottom: 24px; }
+    .options { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+    .option-btn { background: #FDF2F7; border: 2px solid #FFD6E8; color: #333; padding: 16px 20px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+    .option-btn:hover { border-color: var(--primary); background: #FFF0F6; transform: translateY(-2px); }
+    .option-btn:active { transform: translateY(0); }
+    .option-btn::after { content: '→'; font-size: 1.2rem; color: var(--primary); opacity: 0.6; }
+    .loader-screen { display: none; padding: 40px 20px; text-align: center; }
+    .spinner { width: 50px; height: 50px; border: 4px solid #FFE0F0; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .result-screen { display: none; animation: fadeIn 0.5s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .badge { display: inline-block; background: #E6FFFA; color: #047857; font-weight: 700; font-size: 0.8rem; padding: 6px 14px; border-radius: 50px; margin-bottom: 16px; border: 1px solid #A7F3D0; }
+    .product-img { width: 100%; max-width: 380px; border-radius: 12px; margin: 15px auto; display: block; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .price-tag { margin: 18px 0; background: #FFF5F9; padding: 16px; border-radius: 12px; border: 1px dashed var(--primary); }
+    .old-price { text-decoration: line-through; color: #888; font-size: 0.95rem; }
+    .new-price { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-top: 4px; }
+    .cta-btn { display: inline-block; width: 100%; background: linear-gradient(180deg, #FF0080 0%, #D6006B 100%); color: #FFF; text-decoration: none; padding: 18px 24px; border-radius: 12px; font-size: 1.1rem; font-weight: 700; text-align: center; box-shadow: 0 8px 25px rgba(255, 0, 128, 0.35); transition: all 0.3s ease; border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 10px; }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255, 0, 128, 0.45); }
+    .benefits-list { text-align: left; margin: 20px 0; font-size: 0.95rem; color: #444; display: flex; flex-direction: column; gap: 8px; }
+    .benefits-list li { list-style: none; display: flex; align-items: center; gap: 8px; }
+    .benefits-list li::before { content: '✓'; color: var(--primary); font-weight: bold; }
+    .social-proof { margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px; text-align: left; }
+    .social-proof h3 { font-size: 1rem; margin-bottom: 12px; color: #111; text-align: center; }
+    .review-card { background: #F9F9F9; padding: 12px 16px; border-radius: 10px; font-size: 0.88rem; margin-bottom: 10px; border: 1px solid #EEE; }
+    .review-author { font-weight: 700; color: #333; margin-top: 4px; display: block; font-size: 0.8rem; }
+    .trust-badges { display: flex; justify-content: center; gap: 15px; margin-top: 20px; font-size: 0.75rem; color: #777; flex-wrap: wrap; }
+    footer { margin-top: auto; width: 100%; max-width: 600px; padding: 20px; text-align: center; font-size: 0.75rem; color: #888; border-top: 1px solid var(--border); }
+    footer a { color: #666; text-decoration: underline; }
   </style>
-  <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full">
-  <div id="app-wrapper" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #EC4899 0%, #DB2777 50%, #BE185D 100%);"><!-- Timer Fixo -->
-   <div id="timer-bar" class="fixed top-0 left-0 right-0 text-white text-center py-4 font-semibold text-sm md:text-base z-50 shadow-lg" style="background: linear-gradient(135deg, #1F2937 0%, #111827 100%);">
-    <div class="max-w-6xl mx-auto px-4 flex items-center justify-center gap-3 md:gap-6"><span class="text-yellow-400 font-bold">🔥 BLACK FRIDAY</span> <span class="hidden md:inline text-gray-300">|</span> <span class="text-white">Termina em:</span>
-     <div class="flex items-center gap-1 md:gap-2 font-mono">
-      <div class="bg-white/10 backdrop-blur px-2 md:px-3 py-1 rounded"><span id="timer-minutes" class="text-yellow-400 font-bold">15</span> <span class="text-xs text-gray-400 ml-1">min</span>
-      </div><span class="text-yellow-400">:</span>
-      <div class="bg-white/10 backdrop-blur px-2 md:px-3 py-1 rounded"><span id="timer-seconds" class="text-yellow-400 font-bold">00</span> <span class="text-xs text-gray-400 ml-1">seg</span>
-      </div>
-     </div>
-    </div>
-   </div><!-- Container Principal -->
-   <div class="w-full pt-16">
-    <div class="max-w-6xl mx-auto px-4 py-8 md:py-12"><!-- Header -->
-     <div class="text-center mb-8 md:mb-12">
-      <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight"><span id="title-line1" class="block text-white">Domine a Arte da</span> <span id="title-line2" class="block text-yellow-300 my-2">MANICURE PROFISSIONAL</span> <span id="title-line3" class="block text-cyan-300">e Fature Alto!</span></h1>
-      <div class="max-w-2xl mx-auto text-white text-base md:text-lg mb-6 space-y-3">
-       <p id="desc-p1">💅 Aprenda técnicas profissionais de esmaltação, nail art e alongamento com as melhores manicures do Brasil.</p>
-       <p id="desc-p2">✨ Do básico ao avançado: aprenda tudo sobre unhas, desde o preparo até decorações incríveis em um curso completo.</p>
-      </div><!-- Box de Preço -->
-      <div class="glass-card inline-block px-6 md:px-10 py-6 rounded-2xl mb-6">
-       <p class="text-white text-sm md:text-base mb-2">De <span id="original-price" class="line-through opacity-70">R$ 497,00</span> por apenas:</p>
-       <p class="text-yellow-300 text-4xl md:text-5xl font-black mb-2"><span id="promo-price" class="animated-price inline-block">R$ 19,90</span></p>
-       <p class="text-white text-xs md:text-sm font-semibold uppercase tracking-wide">PREÇO ÚNICO - PAGAMENTO ÚNICO</p>
-      </div><!-- CTA Principal --> <button id="cta-main" class="w-full md:w-auto px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold text-white rounded-full transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #EC4899 0%, #A855F7 100%); box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);"> <span id="cta-text">GARANTIR MINHA VAGA AGORA</span> </button>
-     </div><!-- Carrossel de Imagens de Unhas -->
-     <div class="carousel-container mb-12 rounded-2xl overflow-hidden">
-      <div class="carousel-track"><img src="https://i.imgur.com/zOe2Mt4.jpg" alt="Unhas decoradas" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/cYSOND3.jpg" alt="Nail art profissional" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/xSxkqvn.jpg" alt="Manicure perfeita" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/NDANoqV.jpg" alt="Unhas estilosas" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/RaT88Qd.jpg" alt="Design de unhas" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/wjWVnBp.jpg" alt="Alongamento de unhas" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/fWV372H.jpg" alt="Unhas decoradas" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/F1tsJSf.jpg" alt="Manicure avançada" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <!-- Duplicar para loop --> <img src="https://i.imgur.com/zOe2Mt4.jpg" alt="Unhas decoradas" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/cYSOND3.jpg" alt="Nail art profissional" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/xSxkqvn.jpg" alt="Manicure perfeita" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/NDANoqV.jpg" alt="Unhas estilosas" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/RaT88Qd.jpg" alt="Design de unhas" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/wjWVnBp.jpg" alt="Alongamento de unhas" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/fWV372H.jpg" alt="Unhas decoradas" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';"> <img src="https://i.imgur.com/F1tsJSf.jpg" alt="Manicure avançada" class="w-28 h-28 md:w-32 md:h-32 rounded-xl mx-2 object-cover" onerror="this.src=''; this.alt='Imagem não disponível'; this.style.display='none';">
-      </div>
-     </div><!-- Hero Section -->
-     <div class="glass-card rounded-3xl p-6 md:p-10 mb-12 text-center">
-      <div class="w-20 h-20 md:w-24 md:h-24 mx-auto mb-6 rounded-full flex items-center justify-center text-4xl md:text-5xl" style="background: linear-gradient(135deg, #EC4899 0%, #A855F7 100%);">
-       💅
-      </div>
-      <p id="hero-desc" class="text-white text-base md:text-lg mb-8 max-w-3xl mx-auto">Transforme sua paixão por manicure em uma carreira lucrativa. Este curso completo vai do zero ao profissional, ensinando técnicas avançadas de esmaltação, nail art e alongamento utilizadas pelas melhores manicures do mercado.</p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
-       <div class="glass-card rounded-2xl p-5 md:p-6 text-center transition-all duration-300 hover:scale-105">
-        <div class="text-3xl md:text-4xl mb-3">
-         💅
-        </div>
-        <h3 id="card1-title" class="text-white font-bold text-base md:text-lg mb-2">Técnicas de Unhas</h3>
-        <p id="card1-desc" class="text-white text-sm opacity-90">Aprenda esmaltação perfeita, nail art, alongamento e todos os segredos das profissionais</p>
-       </div>
-       <div class="glass-card rounded-2xl p-5 md:p-6 text-center transition-all duration-300 hover:scale-105">
-        <div class="text-3xl md:text-4xl mb-3">
-         💰
-        </div>
-        <h3 id="card2-title" class="text-white font-bold text-base md:text-lg mb-2">Fature Alto</h3>
-        <p id="card2-desc" class="text-white text-sm opacity-90">Descubra como conquistar clientes e faturar até R$3.000 por mês trabalhando em casa</p>
-       </div>
-       <div class="glass-card rounded-2xl p-5 md:p-6 text-center transition-all duration-300 hover:scale-105">
-        <div class="text-3xl md:text-4xl mb-3">
-         🏆
-        </div>
-        <h3 id="card3-title" class="text-white font-bold text-base md:text-lg mb-2">Certificado Profissional</h3>
-        <p id="card3-desc" class="text-white text-sm opacity-90">Receba certificação reconhecida no mercado de estética e beleza</p>
-       </div>
-      </div><button id="cta-hero" class="w-full md:w-auto px-8 md:px-12 py-4 text-base md:text-lg font-bold text-white rounded-full transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #EC4899 0%, #A855F7 100%); box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);"> QUERO COMEÇAR AGORA </button>
-     </div><!-- Benefits Section -->
-     <div class="glass-card rounded-3xl p-6 md:p-10 mb-12">
-      <h2 class="text-2xl md:text-4xl font-bold text-white text-center mb-8 md:mb-12">O Que Você Vai Receber</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8">
-       <div class="flex items-start space-x-4">
-        <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-lg md:text-xl">
-         ✓
-        </div>
-        <div>
-         <h3 id="benefit1-title" class="text-white font-bold text-base md:text-lg mb-2">Acesso Vitalício</h3>
-         <p id="benefit1-desc" class="text-white text-sm md:text-base opacity-90">Estude no seu ritmo, quando e onde quiser. O curso fica disponível para sempre na sua conta.</p>
-        </div>
-       </div>
-       <div class="flex items-start space-x-4">
-        <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-lg md:text-xl">
-         ✓
-        </div>
-        <div>
-         <h3 id="benefit2-title" class="text-white font-bold text-base md:text-lg mb-2">Suporte Especializado</h3>
-         <p id="benefit2-desc" class="text-white text-sm md:text-base opacity-90">Tire dúvidas com profissionais experientes através do nosso canal exclusivo de suporte.</p>
-        </div>
-       </div>
-       <div class="flex items-start space-x-4">
-        <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-lg md:text-xl">
-         ✓
-        </div>
-        <div>
-         <h3 id="benefit3-title" class="text-white font-bold text-base md:text-lg mb-2">Material Exclusivo</h3>
-         <p id="benefit3-desc" class="text-white text-sm md:text-base opacity-90">PDFs, templates e checklists profissionais para você aplicar imediatamente.</p>
-        </div>
-       </div>
-       <div class="flex items-start space-x-4">
-        <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-lg md:text-xl">
-         ✓
-        </div>
-        <div>
-         <h3 id="benefit4-title" class="text-white font-bold text-base md:text-lg mb-2">Garantia 7 Dias</h3>
-         <p id="benefit4-desc" class="text-white text-sm md:text-base opacity-90">Satisfação garantida ou seu dinheiro de volta. Sem perguntas, sem burocracia.</p>
-        </div>
-       </div>
-      </div>
-      <div class="text-center"><button id="cta-final" class="w-full md:w-auto px-8 md:px-12 py-4 md:py-5 text-lg md:text-xl font-bold text-white rounded-full transition-all duration-300 hover:scale-105" style="background: linear-gradient(135deg, #EC4899 0%, #A855F7 100%); box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);"> GARANTIR ACESSO AGORA </button>
-      </div>
-     </div>
-    </div>
-   </div><!-- Chat Flutuante -->
-   <div id="chat-container" class="fixed bottom-6 right-6 z-40"><!-- Botão Flutuante --> <button id="chat-toggle" class="chat-floating w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center text-white text-2xl md:text-3xl shadow-lg transition-all duration-300 hover:scale-110" style="background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);"> 💬 </button> <!-- Tooltip -->
-    <div id="chat-tooltip" class="absolute bottom-20 right-0 bg-gray-900 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 transition-opacity duration-300 pointer-events-none">
-     Tire suas dúvidas aqui! 💬
-    </div><!-- Janela do Chat -->
-    <div id="chat-window" class="absolute bottom-20 right-0 w-80 md:w-96 bg-white rounded-2xl shadow-2xl overflow-hidden hidden" style="max-height: 500px;"><!-- Header -->
-     <div class="px-5 py-4 text-white font-bold flex items-center justify-between" style="background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);"><span>Assistente do Curso</span> <button id="chat-close" class="text-white hover:text-gray-200 text-2xl leading-none">×</button>
-     </div><!-- Mensagens -->
-     <div id="chat-messages" class="px-4 py-4 overflow-y-auto" style="height: 320px; background: #F9FAFB;">
-      <div class="message-ai rounded-2xl px-4 py-3 mb-3 text-sm max-w-[85%]"><span id="chat-welcome-msg">Olá! Sou o assistente virtual do curso de manicure. Como posso ajudar você hoje? 💅😊</span>
-      </div>
-     </div><!-- Perguntas Frequentes -->
-     <div class="px-4 py-3 border-t border-gray-200 space-y-2"><button class="faq-btn w-full text-left px-3 py-2 text-xs bg-pink-50 hover:bg-pink-100 rounded-lg transition-colors duration-200" data-question="Como funciona o acesso?"> ❓ Como funciona o acesso? </button> <button class="faq-btn w-full text-left px-3 py-2 text-xs bg-pink-50 hover:bg-pink-100 rounded-lg transition-colors duration-200" data-question="Tem certificado?"> 🏆 Tem certificado? </button> <button class="faq-btn w-full text-left px-3 py-2 text-xs bg-pink-50 hover:bg-pink-100 rounded-lg transition-colors duration-200" data-question="Como funciona a garantia?"> 💯 Como funciona a garantia? </button>
-     </div><!-- Input -->
-     <div class="px-4 py-3 border-t border-gray-200">
-      <form id="chat-form" class="flex space-x-2"><label for="chat-input" class="sr-only">Digite sua mensagem</label> <input id="chat-input" type="text" placeholder="Digite sua dúvida..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-pink-500"> <button type="submit" class="px-4 py-2 text-white rounded-lg font-medium text-sm transition-colors duration-200" style="background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%);"> Enviar </button>
-      </form>
-     </div>
-    </div>
-   </div>
-  </div>
-  <script>
-    // Config
-    const defaultConfig = {
-      main_title_line1: "Domine a Arte da",
-      main_title_line2: "MANICURE PROFISSIONAL",
-      main_title_line3: "e Fature Alto!",
-      description_paragraph1: "💅 Aprenda técnicas profissionais de esmaltação, nail art e alongamento com as melhores manicures do Brasil.",
-      description_paragraph2: "✨ Do básico ao avançado: aprenda tudo sobre unhas, desde o preparo até decorações incríveis em um curso completo.",
-      original_price: "R$ 497,00",
-      promotional_price: "R$ 19,90",
-      cta_button: "GARANTIR MINHA VAGA AGORA",
-      hero_description: "Transforme sua paixão por manicure em uma carreira lucrativa. Este curso completo vai do zero ao profissional, ensinando técnicas avançadas de esmaltação, nail art e alongamento utilizadas pelas melhores manicures do mercado.",
-      card1_title: "Técnicas de Unhas",
-      card1_desc: "Aprenda esmaltação perfeita, nail art, alongamento e todos os segredos das profissionais",
-      card2_title: "Fature Alto",
-      card2_desc: "Descubra como conquistar clientes e faturar até R$8.000 por mês trabalhando em casa",
-      card3_title: "Certificado Profissional",
-      card3_desc: "Receba certificação reconhecida no mercado de estética e beleza",
-      benefit1_title: "Acesso Vitalício",
-      benefit1_desc: "Estude no seu ritmo, quando e onde quiser. O curso fica disponível para sempre na sua conta.",
-      benefit2_title: "Suporte Especializado",
-      benefit2_desc: "Tire dúvidas com profissionais experientes através do nosso canal exclusivo de suporte.",
-      benefit3_title: "Material Exclusivo",
-      benefit3_desc: "PDFs, templates e checklists profissionais para você aplicar imediatamente.",
-      benefit4_title: "Garantia 7 Dias",
-      benefit4_desc: "Satisfação garantida ou seu dinheiro de volta. Sem perguntas, sem burocracia.",
-      chat_welcome: "Olá! Sou o assistente virtual do curso de manicure. Como posso ajudar você hoje? 💅😊",
-      background_color: "#EC4899",
-      surface_color: "#FFFFFF",
-      text_color: "#1F2937",
-      primary_action_color: "#EC4899",
-      secondary_action_color: "#10B981"
-    };
+</head>
+<body>
+  <header>
+    <img src="https://imgur.com/Oden0Yt.png" alt="Nail Designer Logo">
+  </header>
 
-    // Timer
-    let timeLeft = 15 * 60;
-    const timerMinutes = document.getElementById('timer-minutes');
-    const timerSeconds = document.getElementById('timer-seconds');
-    const timerBar = document.getElementById('timer-bar');
-    
-    function updateTimer() {
-      const minutes = Math.floor(timeLeft / 60);
-      const seconds = timeLeft % 60;
-      timerMinutes.textContent = minutes.toString().padStart(2, '0');
-      timerSeconds.textContent = seconds.toString().padStart(2, '0');
-      
-      if (timeLeft <= 5 * 60 && timeLeft > 0) {
-        timerBar.classList.add('urgent-timer');
-      } else {
-        timerBar.classList.remove('urgent-timer');
-      }
-      
-      if (timeLeft <= 0) {
-        timeLeft = 15 * 60;
-      } else {
-        timeLeft--;
-      }
-    }
-    
-    setInterval(updateTimer, 1000);
+  <div class="container">
+    <div class="card" id="quiz-box">
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress"></div>
+      </div>
+      <div class="step-counter" id="step-counter">Pergunta 1 de 4</div>
 
-    // Chat
-    const chatToggle = document.getElementById('chat-toggle');
-    const chatWindow = document.getElementById('chat-window');
-    const chatClose = document.getElementById('chat-close');
-    const chatTooltip = document.getElementById('chat-tooltip');
-    const chatForm = document.getElementById('chat-form');
-    const chatInput = document.getElementById('chat-input');
-    const chatMessages = document.getElementById('chat-messages');
-    const faqButtons = document.querySelectorAll('.faq-btn');
-    
-    let tooltipTimeout;
-    
-    chatToggle.addEventListener('mouseenter', () => {
-      tooltipTimeout = setTimeout(() => {
-        chatTooltip.style.opacity = '1';
-      }, 500);
-    });
-    
-    chatToggle.addEventListener('mouseleave', () => {
-      clearTimeout(tooltipTimeout);
-      chatTooltip.style.opacity = '0';
-    });
-    
-    chatToggle.addEventListener('click', () => {
-      chatWindow.classList.toggle('hidden');
-      chatTooltip.style.opacity = '0';
-    });
-    
-    chatClose.addEventListener('click', () => {
-      chatWindow.classList.add('hidden');
-    });
-    
-    function addMessage(text, isUser = false) {
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `rounded-2xl px-4 py-3 mb-3 text-sm max-w-[85%] ${isUser ? 'message-user' : 'message-ai'}`;
-      messageDiv.textContent = text;
-      chatMessages.appendChild(messageDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-    
-    function getAIResponse(question) {
-      const responses = {
-        "Como funciona o acesso?": "Assim que o pagamento for confirmado, você receberá um email com seu login e senha. O acesso �� imediato e vitalício! 🎉",
-        "Tem certificado?": "Sim! Ao concluir o curso, você recebe um certificado digital reconhecido no mercado de estética e beleza. 🏆",
-        "Como funciona a garantia?": "Você tem 7 dias para testar o curso. Se não gostar, devolvemos 100% do seu dinheiro, sem perguntas! 💯",
-      };
-      
-      const defaultResponses = [
-        "Ótima pergunta! Nosso curso é completo e vai do básico ao avançado. Você aprenderá tudo sobre manicure profissional! 💅",
-        "Com certeza! Este curso foi desenvolvido por profissionais com mais de 10 anos de experiência no mercado de beleza. 🌟",
-        "Sim! Você terá acesso a todo o conteúdo imediatamente após a compra e poderá estudar no seu próprio ritmo. ⚡",
-        "Essa é uma excelente escolha! Milhares de alunas já transformaram suas vidas com nosso método. 🎯",
-        "Com este curso, você terá todas as ferramentas necessárias para se tornar uma manicure profissional! 💼"
-      ];
-      
-      return responses[question] || defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
-    }
-    
-    function handleUserMessage(message) {
-      addMessage(message, true);
-      
-      setTimeout(() => {
-        const response = getAIResponse(message);
-        addMessage(response, false);
+      <!-- Pergunta 1 -->
+      <div class="quiz-step" id="step-1">
+        <h2>Qual é o seu nível de experiência com Manicure e Nail Design?</h2>
+        <p class="subtitle">Escolha a opção que melhor descreve sua situação atual.</p>
+        <div class="options">
+          <button class="option-btn" onclick="nextStep(2, 50)">Iniciante (Vou começar do absoluto zero)</button>
+          <button class="option-btn" onclick="nextStep(2, 50)">Básico (Já faço minhas próprias unhas)</button>
+          <button class="option-btn" onclick="nextStep(2, 50)">Profissional (Quero aprender técnicas avançadas)</button>
+        </div>
+      </div>
+
+      <!-- Pergunta 2 -->
+      <div class="quiz-step" id="step-2" style="display: none;">
+        <h2>Qual é o seu objetivo principal ao aprender Nail Design?</h2>
+        <p class="subtitle">Isso ajuda a direcionar a recomendação perfeita para você.</p>
+        <div class="options">
+          <button class="option-btn" onclick="nextStep(3, 75)">Ter uma renda extra trabalhando em casa</button>
+          <button class="option-btn" onclick="nextStep(3, 75)">Conquistar minha independência financeira</button>
+          <button class="option-btn" onclick="nextStep(3, 75)">Aprender por hobby e economizar no salão</button>
+        </div>
+      </div>
+
+      <!-- Pergunta 3 -->
+      <div class="quiz-step" id="step-3" style="display: none;">
+        <h2>Quanto tempo você tem disponível por dia para praticar?</h2>
+        <p class="subtitle">O treinamento adapta-se à sua rotina diária.</p>
+        <div class="options">
+          <button class="option-btn" onclick="nextStep(4, 90)">30 minutos por dia</button>
+          <button class="option-btn" onclick="nextStep(4, 90)">1 hora por dia</button>
+          <button class="option-btn" onclick="nextStep(4, 90)">Mais de 2 horas por dia</button>
+        </div>
+      </div>
+
+      <!-- Pergunta 4 -->
+      <div class="quiz-step" id="step-4" style="display: none;">
+        <h2>Você deseja receber Certificado de Conclusão Profissional ao final?</h2>
+        <p class="subtitle">O certificado é válido em todo o território nacional.</p>
+        <div class="options">
+          <button class="option-btn" onclick="finishQuiz()">Sim, com certeza!</button>
+          <button class="option-btn" onclick="finishQuiz()">Sim, se possível</button>
+        </div>
+      </div>
+
+      <!-- Loader -->
+      <div class="loader-screen" id="loader">
+        <div class="spinner"></div>
+        <h2>Analisando suas respostas...</h2>
+        <p class="subtitle">Verificando disponibilidade de vagas promocionais para o seu perfil.</p>
+      </div>
+
+      <!-- Resultado -->
+      <div class="result-screen" id="result">
+        <span class="badge">✓ Elegível para Desconto Especial</span>
+        <h1>Parabéns! Seu perfil é ideal para a Formação Nail Designer</h1>
+        <p class="subtitle">Você tem o perfil perfeito para dominar o método do zero ao avançado no seu próprio ritmo.</p>
         
-        setTimeout(() => {
-          const ctaMessage = document.createElement('div');
-          ctaMessage.className = 'message-ai rounded-2xl px-4 py-3 mb-3 text-sm max-w-[85%]';
-          ctaMessage.innerHTML = `
-            <p class="mb-2">Ficou interessada? Aproveite a oferta especial! 🔥</p>
-            <button class="chat-cta-btn w-full px-4 py-2 text-white rounded-lg font-medium text-xs transition-all duration-200 hover:opacity-90" style="background: linear-gradient(135deg, #EC4899 0%, #A855F7 100%);">
-              GARANTIR ACESSO AGORA
-            </button>
-          `;
-          chatMessages.appendChild(ctaMessage);
-          chatMessages.scrollTop = chatMessages.scrollHeight;
-          
-          ctaMessage.querySelector('.chat-cta-btn').addEventListener('click', () => {
-            window.open('https://kiwify.app/zimULgM?afid=822s7lg6', '_blank');
-          });
-        }, 1000);
-      }, 800);
-    }
-    
-    chatForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const message = chatInput.value.trim();
-      if (message) {
-        handleUserMessage(message);
-        chatInput.value = '';
-      }
-    });
-    
-    faqButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const question = btn.dataset.question;
-        handleUserMessage(question);
-      });
-    });
-    
-    // CTAs - Link da Kiwify
-    const saleUrl = 'https://kiwify.app/zimULgM?afid=822s7lg6';
-    
-    document.getElementById('cta-main').addEventListener('click', () => {
-      window.open(saleUrl, '_blank');
-    });
-    
-    document.getElementById('cta-hero').addEventListener('click', () => {
-      window.open(saleUrl, '_blank');
-    });
-    
-    document.getElementById('cta-final').addEventListener('click', () => {
-      window.open(saleUrl, '_blank');
-    });
+        <img src="https://imgur.com/GZmhcgz.png" alt="Curso Nail Designer" class="product-img">
+        
+        <ul class="benefits-list">
+          <li>Curso 100% online do Zero ao Avançado</li>
+          <li>Acesso vitalício + Suporte para dúvidas</li>
+          <li>Certificado de Conclusão Incluso</li>
+          <li>Aulas práticas e detalhadas em vídeo</li>
+        </ul>
 
-    // Element SDK
-    async function onConfigChange(config) {
-      document.getElementById('title-line1').textContent = config.main_title_line1 || defaultConfig.main_title_line1;
-      document.getElementById('title-line2').textContent = config.main_title_line2 || defaultConfig.main_title_line2;
-      document.getElementById('title-line3').textContent = config.main_title_line3 || defaultConfig.main_title_line3;
-      document.getElementById('desc-p1').textContent = config.description_paragraph1 || defaultConfig.description_paragraph1;
-      document.getElementById('desc-p2').textContent = config.description_paragraph2 || defaultConfig.description_paragraph2;
-      document.getElementById('original-price').textContent = config.original_price || defaultConfig.original_price;
-      document.getElementById('promo-price').textContent = config.promotional_price || defaultConfig.promotional_price;
-      document.getElementById('cta-text').textContent = config.cta_button || defaultConfig.cta_button;
-      document.getElementById('hero-desc').textContent = config.hero_description || defaultConfig.hero_description;
-      document.getElementById('card1-title').textContent = config.card1_title || defaultConfig.card1_title;
-      document.getElementById('card1-desc').textContent = config.card1_desc || defaultConfig.card1_desc;
-      document.getElementById('card2-title').textContent = config.card2_title || defaultConfig.card2_title;
-      document.getElementById('card2-desc').textContent = config.card2_desc || defaultConfig.card2_desc;
-      document.getElementById('card3-title').textContent = config.card3_title || defaultConfig.card3_title;
-      document.getElementById('card3-desc').textContent = config.card3_desc || defaultConfig.card3_desc;
-      document.getElementById('benefit1-title').textContent = config.benefit1_title || defaultConfig.benefit1_title;
-      document.getElementById('benefit1-desc').textContent = config.benefit1_desc || defaultConfig.benefit1_desc;
-      document.getElementById('benefit2-title').textContent = config.benefit2_title || defaultConfig.benefit2_title;
-      document.getElementById('benefit2-desc').textContent = config.benefit2_desc || defaultConfig.benefit2_desc;
-      document.getElementById('benefit3-title').textContent = config.benefit3_title || defaultConfig.benefit3_title;
-      document.getElementById('benefit3-desc').textContent = config.benefit3_desc || defaultConfig.benefit3_desc;
-      document.getElementById('benefit4-title').textContent = config.benefit4_title || defaultConfig.benefit4_title;
-      document.getElementById('benefit4-desc').textContent = config.benefit4_desc || defaultConfig.benefit4_desc;
-      document.getElementById('chat-welcome-msg').textContent = config.chat_welcome || defaultConfig.chat_welcome;
+        <div class="price-tag">
+          <div class="old-price">De R$ 197,00 por apenas</div>
+          <div class="new-price">R$ 19,90</div>
+        </div>
+
+        <a href="https://pay.kiwify.com.br/sUh2FU0?afid=822s7lg6" class="cta-btn" id="cta-link">Verificar Disponibilidade no Site Oficial</a>
+
+        <div class="trust-badges">
+          <span>🔒 Pagamento Seguro</span>
+          <span>⚡ Acesso Imediato</span>
+          <span>🛡️ Garantia de 7 dias</span>
+        </div>
+
+        <div class="social-proof">
+          <h3>Depoimentos de Alunas:</h3>
+          <div class="review-card">
+            "Comecei do zero absoluto e em menos de 3 semanas já atendi minhas primeiras clientes em casa. Recomendo muito!"
+            <span class="review-author">— Camila S., São Paulo/SP ★★★★★</span>
+          </div>
+          <div class="review-card">
+            "O curso é super explicativo, as aulas em alta resolução mostram cada detalhe do acabamento."
+            <span class="review-author">— Juliana M., Belo Horizonte/MG ★★★★★</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Este site não possui vínculo oficial com o Facebook ou Google. Todos os direitos reservados.</p>
+    <p style="margin-top: 5px;"><a href="#">Termos de Uso</a> | <a href="#">Políticas de Privacidade</a></p>
+  </footer>
+
+  <script>
+    function nextStep(stepNumber, progressPercent) {
+      const currentSteps = document.querySelectorAll('.quiz-step');
+      currentSteps.forEach(step => step.style.display = 'none');
       
-      const bgColor = config.background_color || defaultConfig.background_color;
-      document.getElementById('app-wrapper').style.background = `linear-gradient(135deg, ${bgColor} 0%, #DB2777 50%, #BE185D 100%)`;
-      
-      const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
-      const buttons = [document.getElementById('cta-main'), document.getElementById('cta-hero'), document.getElementById('cta-final')];
-      buttons.forEach(btn => {
-        btn.style.background = `linear-gradient(135deg, ${primaryColor} 0%, #A855F7 100%)`;
-      });
+      document.getElementById('step-' + stepNumber).style.display = 'block';
+      document.getElementById('progress').style.width = progressPercent + '%';
+      document.getElementById('step-counter').innerText = 'Pergunta ' + stepNumber + ' de 4';
     }
 
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange,
-        mapToCapabilities: (config) => ({
-          recolorables: [
-            {
-              get: () => config.background_color || defaultConfig.background_color,
-              set: (value) => {
-                config.background_color = value;
-                window.elementSdk.setConfig({ background_color: value });
-              }
-            },
-            {
-              get: () => config.primary_action_color || defaultConfig.primary_action_color,
-              set: (value) => {
-                config.primary_action_color = value;
-                window.elementSdk.setConfig({ primary_action_color: value });
-              }
-            }
-          ],
-          borderables: [],
-          fontEditable: undefined,
-          fontSizeable: undefined
-        }),
-        mapToEditPanelValues: (config) => new Map([
-          ["main_title_line1", config.main_title_line1 || defaultConfig.main_title_line1],
-          ["main_title_line2", config.main_title_line2 || defaultConfig.main_title_line2],
-          ["main_title_line3", config.main_title_line3 || defaultConfig.main_title_line3],
-          ["description_paragraph1", config.description_paragraph1 || defaultConfig.description_paragraph1],
-          ["description_paragraph2", config.description_paragraph2 || defaultConfig.description_paragraph2],
-          ["original_price", config.original_price || defaultConfig.original_price],
-          ["promotional_price", config.promotional_price || defaultConfig.promotional_price],
-          ["cta_button", config.cta_button || defaultConfig.cta_button],
-          ["hero_description", config.hero_description || defaultConfig.hero_description],
-          ["card1_title", config.card1_title || defaultConfig.card1_title],
-          ["card1_desc", config.card1_desc || defaultConfig.card1_desc],
-          ["card2_title", config.card2_title || defaultConfig.card2_title],
-          ["card2_desc", config.card2_desc || defaultConfig.card2_desc],
-          ["card3_title", config.card3_title || defaultConfig.card3_title],
-          ["card3_desc", config.card3_desc || defaultConfig.card3_desc],
-          ["benefit1_title", config.benefit1_title || defaultConfig.benefit1_title],
-          ["benefit1_desc", config.benefit1_desc || defaultConfig.benefit1_desc],
-          ["benefit2_title", config.benefit2_title || defaultConfig.benefit2_title],
-          ["benefit2_desc", config.benefit2_desc || defaultConfig.benefit2_desc],
-          ["benefit3_title", config.benefit3_title || defaultConfig.benefit3_title],
-          ["benefit3_desc", config.benefit3_desc || defaultConfig.benefit3_desc],
-          ["benefit4_title", config.benefit4_title || defaultConfig.benefit4_title],
-          ["benefit4_desc", config.benefit4_desc || defaultConfig.benefit4_desc],
-          ["chat_welcome", config.chat_welcome || defaultConfig.chat_welcome]
-        ])
-      });
+    function finishQuiz() {
+      const currentSteps = document.querySelectorAll('.quiz-step');
+      currentSteps.forEach(step => step.style.display = 'none');
+      document.getElementById('progress').style.width = '100%';
+      document.getElementById('step-counter').style.display = 'none';
+      document.getElementById('loader').style.display = 'block';
+
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('progress').parentElement.style.display = 'none';
+        document.getElementById('result').style.display = 'block';
+      }, 1800);
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9abe52fe8266f200',t:'MTc2NTM4NjI5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  <script defer src="https://presellfuga.lovable.app/tracker.js?site=dd9a12bd-5678-4da8-8d57-51dafc840337"></script>
+</body>
 </html>
